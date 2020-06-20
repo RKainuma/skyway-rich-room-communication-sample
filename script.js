@@ -21,6 +21,7 @@ const sendGroupTrigger = document.getElementById('js-group-send-trigger');
 const sendPersonalTrigger = document.getElementById('js-personal-send-trigger');
 
 
+// ===================
 const assignGroupName = memberName => {
   if ( memberName == "A"
     || memberName == "B"
@@ -82,8 +83,8 @@ const isReceiver = trgMember => {
   return trgMember == peerID;
 };
 
-const isSameGroup = sendergroupName => {
-  return sendergroupName == groupName;
+const isSameGroup = senderGroupName => {
+  return senderGroupName == groupName;
 };
 
 
@@ -148,12 +149,9 @@ genPersonalMsgOptions();
 
     room.on('data', ({ data, src }) => {
       if ( isSameGroup(data.trg) ) {
-        console.log('isGrop');
         groupMessages.textContent += `${src}: ${data.content}\n`;
       } else {
-        console.log('else')
         if ( isReceiver(data.trg) ) {
-          console.log('isRecicver')
           personalMessages.textContent += `${src}: ${data.content}\n`;
         }
       }
