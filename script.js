@@ -82,8 +82,8 @@ const isReceiver = trgMember => {
   return trgMember == peerID;
 };
 
-const isSameGroup = senderPeerID => {
-  return senderPeerID.indexOf(groupName) == 0
+const isSameGroup = sendergroupName => {
+  return sendergroupName == groupName;
 };
 
 
@@ -147,10 +147,13 @@ genPersonalMsgOptions();
     });
 
     room.on('data', ({ data, src }) => {
-      if ( isSameGroup(src) ) {
+      if ( isSameGroup(data.trg) ) {
+        console.log('isGrop');
         groupMessages.textContent += `${src}: ${data.content}\n`;
       } else {
+        console.log('else')
         if ( isReceiver(data.trg) ) {
+          console.log('isRecicver')
           personalMessages.textContent += `${src}: ${data.content}\n`;
         }
       }
@@ -182,7 +185,7 @@ genPersonalMsgOptions();
     leaveTrigger.addEventListener('click', () => room.close(), { once: true });
 
     function onClickGroupSend() {
-      let sendData = {
+      const sendData = {
         trg: `${groupName}`,
         content: groupLocalText.value
       };
@@ -192,7 +195,7 @@ genPersonalMsgOptions();
     };
     
     function onClickPersonalSend() {
-      let sendData  = {
+      const sendData  = {
         trg: receiverOption.value,
         content: personalLocalText.value
       };
